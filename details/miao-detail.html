@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>苗锦详情页</title>
+    <style>
+        /* 和主页面一致的基础样式，保证风格统一 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
+        }
+        body {
+            background-color: #f8f5f2;
+            color: #333;
+            line-height: 1.6;
+        }
+        nav {
+            background-color: #d4b898;
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        nav a:hover {
+            color: #6d4c3d;
+        }
+
+        /* 详情页专属样式 */
+        .detail-header {
+            padding: 3rem 5%;
+            text-align: center;
+            background: #fff;
+            margin-bottom: 2rem;
+        }
+        .detail-header img {
+            width: 60%;
+            max-width: 600px;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+        .detail-section {
+            padding: 2rem 5%;
+            margin: 1rem 0;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .detail-section h3 {
+            color: #8b5a2b;
+            margin-bottom: 1rem;
+            border-left: 4px solid #d4b898;
+            padding-left: 0.5rem;
+        }
+        .buy-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1.5rem;
+            background: #d4b898;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+        .buy-btn:hover {
+            background: #8b5a2b;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏（和主页面一致，增加“返回首页”） -->
+    <nav>
+        <ul>
+            <li><a href="second.html">返回上一页</a></li> <!-- 替换为你的主页面文件名 -->
+            <li><a href="#tech">制作工艺</a></li>
+            <li><a href="#culture">文化故事</a></li>
+            <li><a href="#pattern">纹样解析</a></li>
+            <li><a href="#buy">立即购买</a></li>
+        </ul>
+    </nav>
+
+    <!-- 详情页头部（织锦名称+主图） -->
+    <div class="detail-header">
+        <h2>苗锦</h2>
+        <img src="dai-image.jpg" alt="傣锦孔雀纹细节图"> <!-- 替换为详情图链接 -->
+        <p>傣族传统织锦代表作品，传承千年“通经断纬”工艺</p>
+    </div>
+
+    <!-- 1. 制作工艺详情 -->
+    <section class="detail-section" id="tech">
+        <h3>制作工艺</h3>
+        <p>1. 纺线：选用傣族本土棉麻，手工纺制为粗细均匀的纱线；</p>
+        <p>2. 染线：采用植物染料（蓝靛、苏木），经3次浸染+晾晒固色；</p>
+        <p>3. 上机：将经线固定在竹制腰机上，调整张力至均匀；</p>
+        <p>4. 挑织：以“通经断纬”法，手工挑动纬线形成孔雀羽纹样，单幅作品需耗时7-10天。</p>
+    </section>
+
+    <!-- 2. 文化故事 -->
+    <section class="detail-section" id="culture">
+        <h3>文化故事</h3>
+        <p>孔雀是傣族的“吉祥之鸟”，傣锦中的孔雀纹源于傣族《召树屯与喃木诺娜》的传说，象征爱情忠贞与生活富足。</p>
+        <p>传统傣锦多作为嫁妆，由傣族女子婚前亲手织造，纹样复杂度代表女子的心灵手巧程度。</p>
+    </section>
+
+    <!-- 3. 纹样解析 -->
+    <section class="detail-section" id="pattern">
+        <h3>纹样解析</h3>
+        <p>孔雀纹以“三羽一尾”为核心结构：</p>
+        <p>- 羽片：用渐变蓝线织就，模拟孔雀羽毛的光泽感；</p>
+        <p>- 尾羽：嵌入金色丝线，象征傣族对太阳的崇拜；</p>
+        <p>- 边缘几何纹：代表傣族村寨的“寨心桩”，寓意团聚。</p>
+    </section>
+
+    <!-- 4. 购买区域 -->
+    <section class="detail-section" id="buy">
+        <h3>立即购买</h3>
+        <p>傣锦·孔雀纹挂饰（尺寸：60×80cm）</p>
+        <p>价格：199元 | 材质：棉麻+植物染料</p>
+        <a href="https://example.com/buy-dai" class="buy-btn">立即下单</a>
+    </section>
+</body>
+</html>
