@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>织锦3D动态展示</title>
     <style>
-        /* 页面整体样式：美观背景+居中布局 */
         body {
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            /* 古风纹理背景（可替换为自己的背景图链接） */
-            background-image: url('file:///D:/wangye-new/第二页背景图.jpg'); 
+            /* 古风纹理背景*/
+            background-image: url('../assets/images/second-background.jpg'); 
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -138,7 +137,8 @@
     </style>
 </head>
 <body>
-    <button  class="back-btn">返回首页</button>
+    <a href="../index.html"class="back-btn-link">
+    <button  class="back-btn">返回首页</button></a>
     <!-- 标题：织锦样式 -->
     <h1 class="title">织锦样式</h1>
 
@@ -147,26 +147,26 @@
         <div class="brocade-wrapper">
             <!-- 织锦1：傣锦（点击跳转详情页） -->
             <div class="brocade-item">
-                <a href="dai-detail.html" target="_self"> <!-- href替换为你的傣锦详情页链接 -->
-                    <img src="dai-image.jpg" class="brocade-img" alt="傣锦"> <!-- src替换为傣锦图片链接 -->
+                <a href="dai-detail.html" target="_self"> 
+                    <img src="../assets/images/dai-image.jpg" class="brocade-img" alt="傣锦">
                 </a>
             </div>
             <!-- 织锦2：壮锦 -->
             <div class="brocade-item">
                 <a href="zhuang-detail.html" target="_self"> <!-- 替换为壮锦详情页链接 -->
-                    <img src="zhuang.jpg" class="brocade-img" alt="壮锦"> <!-- 替换为壮锦图片链接 -->
+                    <img src="../assets/images/zhuang-image.jpg" class="brocade-img" alt="壮锦"> <!-- 替换为壮锦图片链接 -->
                 </a>
             </div>
             <!-- 织锦3：苗锦 -->
             <div class="brocade-item">
                 <a href="miao-detail.html" target="_self"> <!-- 替换为苗锦详情页链接 -->
-                    <img src="miao.jpg" class="brocade-img" alt="苗锦"> <!-- 替换为苗锦图片链接 -->
+                    <img src="../assets/images/miao-image.jpg" class="brocade-img" alt="苗锦"> <!-- 替换为苗锦图片链接 -->
                 </a>
             </div>
             <!-- 织锦4：土家锦 -->
             <div class="brocade-item">
                 <a href="tujia-detail.html" target="_self"> <!-- 替换为土家锦详情页链接 -->
-                    <img src="tujia.jpg" class="brocade-img" alt="土家锦"> <!-- 替换为土家锦图片链接 -->
+                    <img src="../assets/images/tujia-image.jpg" class="brocade-img" alt="土家锦"> <!-- 替换为土家锦图片链接 -->
                 </a>
             </div>
         </div>
