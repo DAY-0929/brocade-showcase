@@ -1,7 +1,7 @@
 @font-face {
-    font-family: Millik;
+    font-family: 白鸽天行体;
     font-weight: 700;
-    src: url(./assets/font/Millik.c3f91cb.ttf) format("truetype");
+    src: url(./assets/font/baige.ttf) format("truetype");
     text-rendering: optimizeLegibility;
 }
 
@@ -15,7 +15,7 @@
 * {
     padding: 0;
     margin: 0;
-    font-family: Millik, Arial, sans-serif;
+    font-family: 白鸽天行体, Arial, sans-serif;
     font-size: 62.5%;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -35,10 +35,15 @@ body {
     top: 5%;
     transform: translate(-50%, -5%);
     p {
-        font-size: 4rem;
+        font-size: 50px;
         font-weight: 800;
         white-space: nowrap
     }
+}
+.info h3{
+    font-size:50px;
+    color:#fff;
+    font-weight:bold;
 }
 .back-home {
   position: fixed; /* 固定在左下角，不随页面滚动 */

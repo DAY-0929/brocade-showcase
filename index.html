@@ -111,6 +111,36 @@
     height: 100%;
     object-fit: cover;
 }
+.sound-btn {
+  position: fixed;
+  bottom: 50px;  /* 右下角：距离底部50px */
+  right: 50px;   /* 右下角：距离右侧50px */
+  z-index: 9999;  /* 保证不被遮挡 */
+  /* 下面这些全是你之前能出声时的样式，原样保留！ */
+  width: 40px;
+  height: 40px;
+  background: rgba(0,0,0,0.8);
+  border: 1px solid rgba(255,255,255,0.8);
+  border-radius: 50%;
+  color: #fff;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.sound-btn:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.05);
+}
+.sound-btn.muted::after {
+  content: "";
+  position: absolute;
+  width: 2px;
+  height: 22px;
+  background: #fff;
+  transform: rotate(30deg);
+}
 
         /* 织锦展示文字 */
          /* 织锦展示文字 - 恢复显示+动画 */
@@ -205,11 +235,12 @@
 
         <!-- 中间视频条（永远居中） -->
         <div class="strip video">
-            <video autoplay loop playsinline>
-                <source src="assets/video1.mp4" type="video/mp4">
+            <video autoplay loop playsinline muted>
+                <source src="./assets/video1.mp4" type="video/mp4">
             </video>
+            
         </div>
-
+       
         <div class="strip"><img src="assets/images/p8.jpg"></div>
         <div class="strip"><img src="assets/images/p9.jpg"></div>
         <div class="strip"><img src="assets/images/p10.jpg"></div>
@@ -249,19 +280,19 @@ setTimeout(() => {
 }, 8100);
 
 // 新的播放与消失逻辑
+// 新的播放与消失逻辑
+// 只保留最核心的声音逻辑
 const video = document.querySelector('.strip.video video');
-const clickTip = document.querySelector('.click-tip');
 
-// 给提示文字单独绑定点击事件
-clickTip.addEventListener('click', function() {
-    // 立即隐藏提示文字
-    clickTip.style.opacity = '0';
-    clickTip.style.pointerEvents = 'none';
-    
-    // 取消静音并播放视频
-    video.muted = false;
-    video.play();
-});
+// 初始静音（和之前一样）
+video.muted = true;
+
+// 点击按钮开声音（和之前能出声时的核心逻辑完全一样）
+function openVideoSound() {
+  video.muted = false;
+  video.play();
+}
 </script>
+<button class="sound-btn" onclick="openVideoSound()">🔊</button>
 </body>
 </html>
