@@ -125,13 +125,10 @@
                             lastImgBox.style.transition = 'none'
                             lastImgBox.style.transform = 'translateX(0px)'
                         } else if (index >= 0) {
-                            /*  
-                                这种情况是为了解决在点击完第last，再点击next时造成的bug问题，其实就是回退，再点击last之前
-                                没有加transform属性，点击last以后则添加了transform属性，再次点击next按钮后应该不加transform
-                            */
+                            
                             imgBoxList[0].style.transform = 'none'
                         } else {
-                            // 正常情况下，点击next，则将最左侧的图片移到最后
+                            
                             imgBoxList[0].style.transform = 'translateX(160.68vw)'
                         }
                     }
