@@ -1,298 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <title>Accordion</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #000;
-            overflow: hidden;
-            height: 100vh;
-        }
-        .container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
+<meta charset="utf-8"/>
+<title>Accordion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body {
+background: #000;
+overflow: hidden;
+height: 100vh;
+}
+.container {
+width: 100%;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+position: relative;
+}
+.strip {
+width: 3vw;
+height: 45vh;
+margin: 0 0.3vw;
+transition: all 0.6s ease;
+}
+.click-tip {
+position: absolute;
+bottom: 15%;
+left: 50%;
+transform: translateX(-50%);
+color: rgba(255, 255, 255, 0.9);
+font-size: 18px;
+font-family: "方正粗黑宋简体", "FZHeiSongS-R-GB", SimSun, serif;
+letter-spacing: 2px;
+text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+z-index: 35;
+opacity: 1;
+transition: opacity 0.2s ease;
+cursor: pointer;
+}
 
-        /* 竖条 */
-        .strip {
-            width: 3vw;
-            height: 45vh;
-            margin: 0 0.3vw;
-            transition: all 0.6s ease;
-        }
-        
-        .click-tip {
-            position: absolute;
-            bottom: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            color: rgba(255, 255, 255, 0.9);
-            font-size: 18px;
-            font-family: "方正粗黑宋简体", "FZHeiSongS-R-GB", SimSun, serif;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-            z-index: 35;
-            opacity: 1;
-            transition: opacity 0.2s ease;
-            cursor: pointer;
-        }
+.click-tip:hover {
+text-decoration: underline;
+text-decoration-color: rgba(255, 255, 255, 0.8);
+text-underline-offset: 4px;
+text-decoration-thickness: 1px;
+}
 
-        .click-tip:hover {
-            text-decoration: underline;
-            text-decoration-color: rgba(255, 255, 255, 0.8);
-            text-underline-offset: 4px;
-            text-decoration-thickness: 1px;
-        }
-
-        .click-tip.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .strip img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        /* 图片左右滑出：左侧左滑、右侧右滑，8秒准时消失 */
+.click-tip.hidden {
+opacity: 0;
+pointer-events: none;
+}
+.strip img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
 .hide_garbage_strips .strip:not(.video) {
-  opacity: 0;
-  transition: transform 0.8s ease, opacity 0.8s ease;
+opacity: 0;
+transition: transform 0.8s ease, opacity 0.8s ease;
 }
-/* 左侧7张图片向左滑出 */
 .hide_garbage_strips .strip:not(.video):nth-child(-n+7) {
-  transform: translateX(-100vw);
+transform: translateX(-100vw);
 }
-/* 右侧7张图片向右滑出 */
 .hide_garbage_strips .strip:not(.video):nth-child(n+9) {
-  transform: translateX(100vw);
+transform: translateX(100vw);
 }
 
-     /* 视频条初始状态：和图片条一样，居中窄条 */
 .strip.video {
-    width: 3vw !important;
-    height: 45vh;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    overflow: hidden;
-    /* 从正中心向左右展开 */
-    transform-origin: center center;
-    transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+width: 100vw !important;
+height: 100vh !important;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+z-index: 10;
+overflow: hidden;
+background: #000;
 }
-
-/* 视频条展开动画：从中间向左右拉伸铺满全屏，无位移 */
 .expand .strip.video {
-    width: 100vw !important;
-    height: 100vh !important;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) !important;
-    margin: 0 !important;
-    z-index: 15; /* 保证在织锦展示文字下方 */
+width: 100vw !important;
+height: 100vh !important;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%) !important;
+margin: 0 !important;
+z-index: 15;
 }
-
-/* 视频本身始终填充，不会被挤压变形 */
+/* 强制填满全屏，无黑边 */
 .strip.video video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+width: 100%;
+height: 100%;
+object-fit: cover; /* 关键：填满屏幕 */
+position: absolute;
+top: 0;
+left: 0;
 }
 .sound-btn {
-  position: fixed;
-  bottom: 50px;  /* 右下角：距离底部50px */
-  right: 50px;   /* 右下角：距离右侧50px */
-  z-index: 9999;  /* 保证不被遮挡 */
-  /* 下面这些全是你之前能出声时的样式，原样保留！ */
-  width: 40px;
-  height: 40px;
-  background: rgba(0,0,0,0.8);
-  border: 1px solid rgba(255,255,255,0.8);
-  border-radius: 50%;
-  color: #fff;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+position: fixed;
+bottom: 50px;
+right: 50px;
+z-index: 9999;
+width: 40px;
+height: 40px;
+background: rgba(0,0,0,0.8);
+border: 1px solid rgba(255,255,255,0.8);
+border-radius: 50%;
+color: #fff;
+font-size: 20px;
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
 }
 .sound-btn:hover {
-  background: rgba(255,255,255,0.2);
-  transform: scale(1.05);
-}
-.sound-btn.muted::after {
-  content: "";
-  position: absolute;
-  width: 2px;
-  height: 22px;
-  background: #fff;
-  transform: rotate(30deg);
+background: rgba(255,255,255,0.2);
+transform: scale(1.05);
 }
 
-        /* 织锦展示文字 */
-         /* 织锦展示文字 - 恢复显示+动画 */
 .title {
-    position: absolute;
-    top: 11%;
-    left: 50%;
-    transform: translateX(-50%);
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 33px;
-    font-weight: 300;
-    font-family: "Microsoft YaHei", sans-serif;
-    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
-    padding: 6px 22px;
-    border: 3px solid rgba(255, 255, 255, 0.7);
-    border-radius: 40px;
-    background: transparent;
-    opacity: 0;
-    transition: all 1.4s ease 0.6s; /* 延迟0.6s渐显，和视频动画衔接 */
-    z-index: 30;
-    cursor: pointer;
-    text-decoration: none;
+position: absolute;
+top: 11%;
+left: 50%;
+transform: translateX(-50%);
+color: rgba(255, 255, 255, 0.85);
+font-size: 33px;
+font-weight: 300;
+font-family: "Microsoft YaHei", sans-serif;
+text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8);
+padding: 6px 22px;
+border: 3px solid rgba(255, 255, 255, 0.7);
+border-radius: 40px;
+background: transparent;
+opacity: 1;
+transition: all 1.4s ease 0.6s;
+z-index: 30;
+cursor: pointer;
+text-decoration: none;
 }
 .expand .title {
-    opacity: 1; /* 视频放大时，织锦展示正常渐显 */
+opacity: 1;
 }
-/* 织锦展示悬浮下划线 - 保留原有效果 */
 .title:hover {
-    text-decoration: underline;
-    text-decoration-color: rgba(255, 255, 255, 0.7);
-    text-underline-offset: 6px;
-    text-decoration-thickness: 1px;
+text-decoration: underline;
+text-decoration-color: rgba(255, 255, 255, 0.7);
+text-underline-offset: 6px;
+text-decoration-thickness: 1px;
 }
 
-        /* 底部小图标 + 英文 */
-        .bottom-logo {
-            position: absolute;
-            bottom: 5%;
-            left: 50%;
-            transform: translateX(-50%);
-            text-align: center;
-            color: #fff;
-            opacity: 0;
-            transition: opacity 1.2s ease;
-            z-index: 30;
-        }
+.bottom-logo {
+position: absolute;
+bottom: 5%;
+left: 50%;
+transform: translateX(-50%);
+text-align: center;
+color: #fff;
+opacity: 1;
+transition: opacity 1.2s ease;
+z-index: 30;
+}
 
-        /* 底部小图标（波浪竖线：居中对齐，两边高、中间低） */
-        .bottom-logo .icon {
-            display: flex;
-            align-items: center;    /* 核心：居中对齐 */
-            justify-content: center;
-            gap: 2px;
-            height: 16px;
-            margin-bottom: 4px;
-        }
-        .bottom-logo .icon span {
-            width: 1.5px;
-            background: #fff;
-            border-radius: 1px;
-        }
+.bottom-logo .icon {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 2px;
+height: 16px;
+margin-bottom: 4px;
+}
+.bottom-logo .icon span {
+width: 1.5px;
+background: #fff;
+border-radius: 1px;
+}
 
-        /* 竖线高度依次递减（居中） */
-        .bottom-logo .icon span:nth-child(1) { height: 16px; }
-        .bottom-logo .icon span:nth-child(2) { height: 14px; }
-        .bottom-logo .icon span:nth-child(3) { height: 12px; }
-        .bottom-logo .icon span:nth-child(4) { height: 10px; }
-        .bottom-logo .icon span:nth-child(5) { height: 8px; }
-        .bottom-logo .icon span:nth-child(6) { height: 10px; }
-        .bottom-logo .icon span:nth-child(7) { height: 12px; }
-        .bottom-logo .icon span:nth-child(8) { height: 14px; }
-        .bottom-logo .icon span:nth-child(9) { height: 16px; }
+.bottom-logo .icon span:nth-child(1) { height: 16px; }
+.bottom-logo .icon span:nth-child(2) { height: 14px; }
+.bottom-logo .icon span:nth-child(3) { height: 12px; }
+.bottom-logo .icon span:nth-child(4) { height: 10px; }
+.bottom-logo .icon span:nth-child(5) { height: 8px; }
+.bottom-logo .icon span:nth-child(6) { height: 10px; }
+.bottom-logo .icon span:nth-child(7) { height: 12px; }
+.bottom-logo .icon span:nth-child(8) { height: 14px; }
+.bottom-logo .icon span:nth-child(9) { height: 16px; }
 
-        .bottom-logo .text {
-            font-size: 12px;
-            letter-spacing: 2px;
-        }
-        .expand .bottom-logo {
-            opacity: 1;
-        }
-    </style>
+.bottom-logo .text {
+font-size: 12px;
+letter-spacing: 2px;
+}
+.expand .bottom-logo {
+opacity: 1;
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="strip"><img src="assets/images/p1.jpg"></div>
-        <div class="strip"><img src="assets/images/p2.jpg"></div>
-        <div class="strip"><img src="assets/images/p3.jpg"></div>
-        <div class="strip"><img src="assets/images/p4.jpg"></div>
-        <div class="strip"><img src="assets/images/p5.jpg"></div>
-        <div class="strip"><img src="assets/images/p6.jpg"></div>
-        <div class="strip"><img src="assets/images/p7.jpg"></div>
+<div class="container">
 
-        <!-- 中间视频条（永远居中） -->
-        <div class="strip video">
-            <video autoplay loop playsinline muted>
-                <source src="./assets/video1.mp4" type="video/mp4">
-            </video>
-            
-        </div>
-       
-        <div class="strip"><img src="assets/images/p8.jpg"></div>
-        <div class="strip"><img src="assets/images/p9.jpg"></div>
-        <div class="strip"><img src="assets/images/p10.jpg"></div>
-        <div class="strip"><img src="assets/images/p11.jpg"></div>
-        <div class="strip"><img src="assets/images/p12.jpg"></div>
-        <div class="strip"><img src="assets/images/p13.jpg"></div>
-        <div class="strip"><img src="assets/images/p14.jpg"></div>
+<div class="strip video">
+<video autoplay loop playsinline muted>
+<source src="./assets/video1.mp4" type="video/mp4">
+</video>
+</div>
 
-        <!-- 顶部：织锦展示（点击跳转） -->
-        <div class="title" onclick="window.location.href='second1.html'" >织锦展示</div>
-        <div class="bottom-logo">
-            <div class="icon">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <div class="text">THE CHARM OF BROCADE</div>
-        </div>
-    </div>
-    <script>
-// 原有定时器保持不变
-// 8秒后，图片开始向左右散开
-// 8秒后，图片向左右滑出消失
-setTimeout(() => {
-    document.querySelector('.container').classList.add('hide_garbage_strips');
-}, 8000);
+<div class="title" onclick="window.location.href='second1.html'" >织锦展示</div>
+<div class="bottom-logo">
+<div class="icon">
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+<span></span>
+</div>
+<div class="text">THE CHARM OF BROCADE</div>
+</div>
+</div>
 
-// 8.5秒后，视频原地平滑放大到全屏
-setTimeout(() => {
-    document.body.classList.add('expand');
-}, 8100);
-
-// 新的播放与消失逻辑
-// 新的播放与消失逻辑
-// 只保留最核心的声音逻辑
+<script>
 const video = document.querySelector('.strip.video video');
-
-// 初始静音（和之前一样）
 video.muted = true;
 
-// 点击按钮开声音（和之前能出声时的核心逻辑完全一样）
-function openVideoSound() {
-  video.muted = false;
-  video.play();
+
+function toggleSound() {
+  video.muted = !video.muted;
 }
 </script>
-<button class="sound-btn" onclick="openVideoSound()">🔊</button>
+
+<button class="sound-btn" onclick="toggleSound()">
+  🔊
+</button>
+
 </body>
 </html>
