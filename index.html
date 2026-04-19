@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Accordion</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
 <style>
 * {
@@ -10,23 +11,24 @@ margin: 0;
 padding: 0;
 box-sizing: border-box;
 }
+
 body {
 background: #000;
 overflow: hidden;
 height: 100vh;
-width: 100vw;
-margin: 0 !important;
-padding: 0 !important;
+width: 100vw; 
+margin: 0 !important; 
 }
 .container {
-width: 100vw !important;
-height: 100vh !important;
+width: 100vw !important; 
+height: 100vh !important; 
 display: flex;
 align-items: center;
 justify-content: center;
 position: relative;
 overflow: hidden;
 }
+
 
 .strip {
 width: 3vw;
@@ -67,6 +69,7 @@ width: 100%;
 height: 100%;
 object-fit: cover;
 }
+
 .hide_garbage_strips .strip:not(.video) {
 opacity: 0;
 transition: transform 0.8s ease, opacity 0.8s ease;
@@ -78,14 +81,14 @@ transform: translateX(-100vw);
 transform: translateX(100vw);
 }
 
-/* 视频全屏样式（不变） */
+
 .strip.video {
 width: 100vw !important;
 height: 100vh !important;
-position: fixed !important;
+position: fixed !important; 
 top: 0 !important;
 left: 0 !important;
-transform: none !important;
+transform: none !important; 
 z-index: 10;
 overflow: hidden;
 background: #000;
@@ -100,17 +103,19 @@ transform: none !important;
 margin: 0 !important;
 z-index: 15;
 }
+
 .strip.video video {
-width: 100vw !important;
-height: 100vh !important;
+width: 100vw !important; 
+height: 100vh !important; 
 object-fit: cover !important;
-object-position: center center;
+object-position: center center; 
 position: absolute;
 top: 0;
 left: 0;
 }
 
-/* 喇叭按钮 */
+
+
 .sound-btn {
 position: fixed;
 bottom: 50px;
@@ -133,7 +138,7 @@ background: rgba(255,255,255,0.2);
 transform: scale(1.05);
 }
 
-/* 织锦展示文字 */
+
 .title {
 position: absolute;
 top: 11%;
@@ -164,7 +169,6 @@ text-underline-offset: 6px;
 text-decoration-thickness: 1px;
 }
 
-/* 底部小图标 + 英文 */
 .bottom-logo {
 position: absolute;
 bottom: 5%;
@@ -176,6 +180,7 @@ opacity: 1;
 transition: opacity 1.2s ease;
 z-index: 30;
 }
+
 
 .bottom-logo .icon {
 display: flex;
@@ -212,20 +217,14 @@ opacity: 1;
 </head>
 <body>
 <div class="container">
-<!-- 中间视频条（关键修改：兼容路径+多格式） -->
+
 <div class="strip video">
-<video autoplay loop playsinline muted preload="auto" poster="./assets/cover.jpg">
-  <!-- 方案1：本地视频（确保路径正确） -->
-  <source src="./video1.mp4" type="video/mp4">
-  <!-- 方案2：备用格式（兼容老浏览器） -->
-  <source src="./video1.webm" type="video/webm">
-  <!-- 方案3：如果本地不行，用在线测试视频（替换上面两行） -->
-  <!-- <source src="https://www.w3school.com.cn/i/movie.mp4" type="video/mp4"> -->
-  您的浏览器不支持视频播放，请升级浏览器！
+<video autoplay loop playsinline muted>
+<source src="./assets/video1.mp4" type="video/mp4">
 </video>
 </div>
 
-<!-- 顶部：织锦展示 -->
+
 <div class="title" onclick="window.location.href='second1.html'" >织锦展示</div>
 <div class="bottom-logo">
 <div class="icon">
@@ -245,34 +244,21 @@ opacity: 1;
 
 <script>
 const video = document.querySelector('.strip.video video');
+
 video.muted = true;
 
-// 点击开关声音
+
 function toggleSound() {
   video.muted = !video.muted;
 }
 
-// 关键：视频加载失败时提示+自动重试
-video.onerror = function() {
-  console.log('视频加载失败！检查路径：', video.src);
-  // 备用方案：加载在线测试视频
-  video.src = 'https://www.w3school.com.cn/i/movie.mp4';
-  video.load();
-};
 
-// 页面加载后强制播放
 window.onload = function() {
   video.style.width = window.innerWidth + 'px';
   video.style.height = window.innerHeight + 'px';
-  // 兼容浏览器自动播放策略
-  video.play().catch(err => {
-    console.log('自动播放受限，点击页面后播放：', err);
-    document.body.addEventListener('click', () => {
-      video.play();
-    }, { once: true });
-  });
 };
 </script>
+
 
 <button class="sound-btn" onclick="toggleSound()">
   🔊
